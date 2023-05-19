@@ -1,6 +1,10 @@
 package com.example.designpatternforcar.vehicle.parts
 
 class Wheel : Parts {
-    override val price: Int
+    override val selfPrice: Int
         get() = 12000
+
+
+    override val totalCost: Int
+        get() = selfPrice
 }

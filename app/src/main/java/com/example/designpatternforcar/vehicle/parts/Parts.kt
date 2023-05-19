@@ -1,5 +1,6 @@
 package com.example.designpatternforcar.vehicle.parts
 
 interface Parts {
-    val price: Int
+    val selfPrice: Int
+    val totalCost: Int
 }

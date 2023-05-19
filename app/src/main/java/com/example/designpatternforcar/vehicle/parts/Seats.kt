@@ -1,6 +1,9 @@
 package com.example.designpatternforcar.vehicle.parts
 
 class Seats : Parts {
-    override val price: Int
+    override val selfPrice: Int
         get() = 15000
+
+    override val totalCost: Int
+        get() = selfPrice
 }
