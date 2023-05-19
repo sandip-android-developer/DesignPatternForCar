@@ -5,6 +5,8 @@ import com.example.designpatternforcar.vehicle.parts.Chasis
 import com.example.designpatternforcar.vehicle.parts.Engine
 import com.example.designpatternforcar.vehicle.parts.Transmission
 import com.example.designpatternforcar.vehicle.parts.WheelBase
+import com.example.designpatternforcar.vehicle.parts.seats.Seats
+import com.example.designpatternforcar.vehicle.parts.wheel.Wheel
 
 class Main {
     companion object {
@@ -13,7 +15,11 @@ class Main {
             val hondaCity: Vehicle = Vehicle(
                 wheelBase = WheelBase(
                     WheelBase.Size.MEDIUM,
-                    Chasis(Chasis.Type.SEDAN)
+                    Chasis(
+                        Chasis.Type.SEDAN,
+                        Seats.SeatFactory(Seats.Upholstery.LEATHER)
+                    ),
+                    wheelFactory = Wheel.WheelFactory(Wheel.Type.STEEL)
                 ),
                 engine = Engine(
                     Engine.Type.DIESEL,
@@ -24,7 +30,12 @@ class Main {
             val ecoSport = Vehicle(
                 wheelBase = WheelBase(
                     WheelBase.Size.SMALL,
-                    Chasis(Chasis.Type.SUV)
+                    Chasis(
+                        Chasis.Type.SUV,
+                        seatFactory = Seats.SeatFactory(Seats.Upholstery.REXINE)
+                    ),
+                    wheelFactory = Wheel.WheelFactory(Wheel.Type.ALLOY),
+                    spareWhee = true
                 ),
                 engine = Engine(
                     Engine.Type.DIESEL,

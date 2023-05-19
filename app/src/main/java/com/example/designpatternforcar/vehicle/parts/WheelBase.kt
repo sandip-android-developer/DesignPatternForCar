@@ -1,12 +1,22 @@
 package com.example.designpatternforcar.vehicle.parts
 
+import com.example.designpatternforcar.vehicle.parts.wheel.Wheel
+
 class WheelBase(
     val size: Size,
-    val chasis: Chasis
+    val chasis: Chasis,
+    val wheelFactory: Wheel.WheelFactory,
+    val spareWhee: Boolean = false
 ) : Parts {
-    val wheels: List<Wheel> = listOf(
-        Wheel(), Wheel(), Wheel(), Wheel()
-    )
+
+    val numWheels: Int = when (size) {
+        Size.SMALL -> 4
+        Size.MEDIUM -> 6
+        Size.BIG -> 8
+    }
+    val wheels: List<Wheel> =
+        generateSequence { wheelFactory.createWheel() }.take((numWheels + (if (spareWhee) 1 else 0)))
+            .toList()
     override val selfPrice: Int
         get() = when (size) {
             Size.SMALL -> 100000
