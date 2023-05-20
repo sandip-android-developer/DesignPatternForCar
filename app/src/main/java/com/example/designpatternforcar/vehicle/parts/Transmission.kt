@@ -1,6 +1,6 @@
 package com.example.designpatternforcar.vehicle.parts
 
-class Transmission(val type: Type) : Parts {
+class Transmission(private val type: Type) : Parts {
     override val selfPrice: Int
         get() = when (type) {
             Type.RWD -> 90000
