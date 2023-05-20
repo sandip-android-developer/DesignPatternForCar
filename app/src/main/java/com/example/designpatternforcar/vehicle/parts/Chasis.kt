@@ -2,19 +2,11 @@ package com.example.designpatternforcar.vehicle.parts
 
 import com.example.designpatternforcar.vehicle.parts.seats.Seats
 
-class Chasis(
+class Chasis private constructor(
     private val type: Type,
-    val seatFactory: Seats.SeatFactory
+    private val seats: List<Seats>
 ) : Parts {
 
-    private val numSeats: Int = when (type) {
-        Type.HATCHBACK -> 4
-        Type.SEDAN -> 5
-        Type.SUV -> 8
-        Type.PICKUP -> 6
-    }
-
-    private val seats: List<Seats> = generateSequence { seatFactory.createSeat() }.take(numSeats).toList()
 
     override val selfPrice: Int
         get() = when (type) {
@@ -28,5 +20,33 @@ class Chasis(
 
     enum class Type {
         HATCHBACK, SEDAN, SUV, PICKUP
+    }
+
+    class Builder {
+        lateinit var chasisType: Type
+        lateinit var seatFactory: Seats.SeatFactory
+
+        fun setChasisType(chasisType: Type): Builder {
+            this.chasisType = chasisType
+            return this
+        }
+
+        fun setSeatFactory(seatFactory: Seats.SeatFactory): Builder {
+            this.seatFactory = seatFactory
+            return this
+        }
+
+        fun build(): Chasis {
+            val numSeats: Int = when (this.chasisType) {
+                Type.HATCHBACK -> 4
+                Type.SEDAN -> 5
+                Type.SUV -> 8
+                Type.PICKUP -> 6
+            }
+            return Chasis(
+                this.chasisType,
+                this.seatFactory.createSeats(numSeats)
+            )
+        }
     }
 }
